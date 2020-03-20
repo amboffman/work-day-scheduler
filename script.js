@@ -2,6 +2,7 @@ var now = JSON.stringify(moment());
 var todaysDate = moment().format("dddd, MMMM Do YYYY");
 var currentTime = moment();
 var currentHour = moment().hours();
+// var currentHour = 12;
 var timeBlock = document.querySelectorAll(".time-block");
     //display current date in current date id
     $("#currentDay").text(todaysDate);
@@ -34,24 +35,53 @@ var timeBlock = document.querySelectorAll(".time-block");
 //store in local storage
 
 var inputTask = document.querySelectorAll(".description");
-var save = document.querySelectorAll(".saveBtn");
+var saveButtons = $(".saveBtn");
 var tasks = [];
 var placement =[];
 init();
 
-save.addEventListener("click", function (event) {
-    event.preventDefault();
+// check for value of time block in local storage
+var time9 = localStorage.getItem("hour-9");
+var time10 = localStorage.getItem("hour-10");
+var time11 = localStorage.getItem("hour-11");
+var time12 = localStorage.getItem("hour-12");
+var time13 = localStorage.getItem("hour-13");
+var time14 = localStorage.getItem("hour-14");
+var time15 = localStorage.getItem("hour-15");
+var time16 = localStorage.getItem("hour-16");
+var time17 = localStorage.getItem("hour-17");
 
-    var taskText = inputTask.value.trim();
+// set value of textaea in timeblock
+$("#hour-9 textarea").val(time9);
+$("#hour-10 textarea").val(time10);
+$("#hour-11 textarea").val(time11);
+$("#hour-12 textarea").val(time12);
+$("#hour-13 textarea").val(time13);
+$("#hour-14 textarea").val(time14);
+$("#hour-15 textarea").val(time15);
+$("#hour-16 textarea").val(time16);
+$("#hour-17 textarea").val(time17);
 
-    if (taskText === "") {
-        return;
-    }
+saveButtons.on("click", function (event) {
+    // grab the hour from the parent
+    var hourGrab = $(this).parent().attr("id");
+    console.log(hourGrab);
+    // grab the user description
+    var descriptionGrab = $(this).siblings("textarea").val().trim();
+    console.log(descriptionGrab);
+    // store the hour of the input
+    // store the description the user input
+    localStorage.setItem(hourGrab, descriptionGrab);
+    // var taskText = inputTask.value.trim();
 
-    tasks.push(taskText);
-    inputTask.value = "";
+    // if (taskText === "") {
+    //     return;
+    // }
+
+    // tasks.push(taskText);
+    // inputTask.value = "";
   
-    storeTasks();
+    // storeTasks();
 });
 function storeTasks() {
     localStorage.setItem("description", JSON.stringify(tasks));
